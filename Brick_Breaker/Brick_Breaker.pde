@@ -1,7 +1,7 @@
 //Bryn Jensen
 //2-1
 //Brick Breaker
-//make ball and bounce
+//breakout pt3 6:05
 
 //MINIM
 import ddf.minim.*;
@@ -44,8 +44,9 @@ final int GAMEOVER = 3;
 
 //ENTITY VARIABLES
 float px, py, pd; //PADDLE
-float ballx, bally, balld; //BALL
-float vx, vy, a; //BALL VELOCITY
+float bx, by, bd; //BALL
+float bvx, bvy; //BALL VELOCITY
+float brd; //BRICK DIAMETER
 
 //KEYBOARD VARIABLES
 boolean akey, dkey;
@@ -56,10 +57,17 @@ float text = 80;
 
 boolean textS = true;
 
+//BRICK VARIABLES
+int[] x;
+int[] y;
+
+int n;
+int tempx, tempy;
+
 void setup() {
   size(800, 800, P2D);
   mode = INTRO;
-  
+
   textAlign(CENTER);
 
   //ENTITY INITIALIZATION
@@ -69,16 +77,34 @@ void setup() {
   pd = 100;
 
   //BALL
-  ballx = width/2;
-  bally = height - 200;
-  balld = 20;
-
+  bx = width/2;
+  by = height - 200;
+  bd = 20;
+  bvx = 0;
+  bvy = 1;
   //KEYBOARD VARIABLES INITIALIZATION
   dkey = akey = false;
 
   //FONT LOADING
   PFont font = createFont("Wheel Turn.otf", 200);
   textFont(font);
+
+  //SETUP ARRAY OF BRICKS
+  n = 28;
+  brd = 40;
+
+  x = new int[n];
+  y = new int[n];
+  tempx = 100;
+  tempy = 100;
+
+  int i = 0;
+  while (i < n) {
+    x[i] = tempx;
+    y[i] = tempy;
+    i = i + 1;
+    tempx += 100;
+  }
 }
 
 
