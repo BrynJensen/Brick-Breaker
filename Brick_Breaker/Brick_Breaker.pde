@@ -1,7 +1,7 @@
 //Bryn Jensen
 //2-1
 //Brick Breaker
-//breakout pt3 6:05
+//breakout pt4 8:20
 
 //MINIM
 import ddf.minim.*;
@@ -47,6 +47,7 @@ float px, py, pd; //PADDLE
 float bx, by, bd; //BALL
 float bvx, bvy; //BALL VELOCITY
 float brd; //BRICK DIAMETER
+color bc; //BRICK FILL
 
 //KEYBOARD VARIABLES
 boolean akey, dkey;
@@ -78,10 +79,11 @@ void setup() {
 
   //BALL
   bx = width/2;
-  by = height - 200;
+  by = height - 125;
   bd = 20;
   bvx = 0;
   bvy = 1;
+  bc = lightOrange;
   //KEYBOARD VARIABLES INITIALIZATION
   dkey = akey = false;
 
@@ -90,20 +92,24 @@ void setup() {
   textFont(font);
 
   //SETUP ARRAY OF BRICKS
-  n = 28;
+  n = 45;
   brd = 40;
 
   x = new int[n];
   y = new int[n];
   tempx = 100;
-  tempy = 100;
+  tempy = 150;
 
   int i = 0;
   while (i < n) {
     x[i] = tempx;
     y[i] = tempy;
     i = i + 1;
-    tempx += 100;
+    tempx += 75;
+    if (tempx >= width - 50) {
+     tempy += 75;
+     tempx = 100;
+    }
   }
 }
 
