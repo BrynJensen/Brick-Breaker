@@ -13,6 +13,19 @@ void game() {
 
   by = by + bvy;
   bx = bx + bvx;
+  
+  //SCORE AND LIVES DISPLAY
+  textSize(26);
+  fill(white);
+  noStroke();
+  
+  text("Score: " + score, width - 75, 30);
+  text("Lives: " + lives, 60, 30);
+  
+  //LIVES
+  if (bx > height) {
+   lives -= 1; 
+  }
 
   //BALL COLISIONS
   if (bx < bd/2) {
@@ -27,6 +40,7 @@ void game() {
   } else if (by > height - bd/2) {
     lives = lives - 1;
     bx = width/2;
+    px = width/2;
     by = height - 125;
     bvx = 0;
     bvy = 1;
@@ -49,11 +63,16 @@ void game() {
 
   int i = 0;
   while (i < n) {
-    
-    manageBrick(i);
+    if (alive[i] == true) {
+      manageBrick(i);
+    }
     i++;
   }
+  
+  //END GAME
+  if (lives == 0 || score == 4500) mode = GAMEOVER;
 }
 
 void gameClicks() {
+  mode = PAUSE;
 }

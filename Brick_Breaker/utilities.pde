@@ -34,5 +34,7 @@ void manageBrick (int i) {
     if (dist(bx, by, x[i], y[i]) <= bd/2 + brd/2) {
       bvx = (bx - x[i])/5;
       bvy = (by - y[i])/5;
+      alive[i] = false;
+      score += 100;
     } 
 }

@@ -1,7 +1,10 @@
 //Bryn Jensen
 //2-1
 //Brick Breaker
-//breakout pt4 8:20
+//add flashing to lives and score display, add lives to bricks and animation to darken as hit.
+// add endgame
+
+import processing.javafx.*;
 
 //MINIM
 import ddf.minim.*;
@@ -15,6 +18,10 @@ import ddf.minim.ugens.*;
 Minim minim;
 AudioPlayer theme, coin, bump, gameover;
 
+//GIF LOADING
+PImage[] gif;
+int f = 12;
+int frame = 0;
 
 //COLOUR PALLETTES
 color white = #FFFFFF;
@@ -46,14 +53,13 @@ final int GAMEOVER = 3;
 float px, py, pd; //PADDLE
 float bx, by, bd; //BALL
 float bvx, bvy; //BALL VELOCITY
-float brd; //BRICK DIAMETER
-color bc; //BRICK FILL
 
 //KEYBOARD VARIABLES
 boolean akey, dkey;
 
 //GAME VARIABLES
-int score, lives;
+int score = 0;
+int lives = 3;
 float text = 80;
 
 boolean textS = true;
@@ -61,12 +67,16 @@ boolean textS = true;
 //BRICK VARIABLES
 int[] x;
 int[] y;
+boolean[] alive;
+
+float brd; //BRICK DIAMETER
+color bc; //BRICK FILL
 
 int n;
 int tempx, tempy;
 
 void setup() {
-  size(800, 800, P2D);
+  size(800, 800, FX2D);
   mode = INTRO;
 
   textAlign(CENTER);
@@ -97,6 +107,7 @@ void setup() {
 
   x = new int[n];
   y = new int[n];
+  alive = new boolean[n];
   tempx = 100;
   tempy = 150;
 
@@ -104,12 +115,22 @@ void setup() {
   while (i < n) {
     x[i] = tempx;
     y[i] = tempy;
+    alive[i] = true;
     i = i + 1;
     tempx += 75;
     if (tempx >= width - 50) {
      tempy += 75;
      tempx = 100;
     }
+  }
+  
+  //SETUP GIF ARRAY
+  gif = new PImage[f];
+  
+  int l = 0;
+  while (l < f) {
+    gif [l] = loadImage("frame_"+l+"_delay-0.07s.gif");
+    l++;
   }
 }
 
