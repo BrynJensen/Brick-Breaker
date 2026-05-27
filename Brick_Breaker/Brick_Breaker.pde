@@ -1,8 +1,8 @@
 //Bryn Jensen
 //2-1
 //Brick Breaker
-//add flashing to lives and score display, add lives to bricks and animation to darken as hit.
-// add endgame
+//add lives to bricks and animation to darken as hit.
+//score counter not working
 
 import processing.javafx.*;
 
@@ -16,7 +16,7 @@ import ddf.minim.ugens.*;
 
 //SOUND VARIABLES
 Minim minim;
-AudioPlayer theme, coin, bump, gameover;
+AudioPlayer theme, coin, bump;
 
 //GIF LOADING
 PImage[] gif;
@@ -26,6 +26,7 @@ int frame = 0;
 //COLOUR PALLETTES
 color white = #FFFFFF;
 color black = #000000;
+color red = #FF0000;
 
 //1
 color lightCyan = #caf0f8;
@@ -61,6 +62,12 @@ boolean akey, dkey;
 int score = 0;
 int lives = 3;
 float text = 80;
+boolean blink;
+boolean blinkL = true;
+boolean blinkS = true;
+int counter = 0;
+boolean countL = false;
+boolean countS = false;
 
 boolean textS = true;
 
@@ -83,7 +90,7 @@ void setup() {
 
   //ENTITY INITIALIZATION
   //PADDLE
-  px = width/2;
+  px = random(width/2 - 45, width/2 + 45);
   py = height;
   pd = 100;
 
@@ -119,19 +126,26 @@ void setup() {
     i = i + 1;
     tempx += 75;
     if (tempx >= width - 50) {
-     tempy += 75;
-     tempx = 100;
+      tempy += 75;
+      tempx = 100;
     }
   }
-  
+
   //SETUP GIF ARRAY
   gif = new PImage[f];
-  
+
   int l = 0;
   while (l < f) {
     gif [l] = loadImage("frame_"+l+"_delay-0.07s.gif");
     l++;
   }
+
+  //MINIM
+  minim = new Minim(this);
+  theme = minim.loadFile("MUSIC.mp3");
+  coin = minim.loadFile("SUCCESS.wav");
+  bump = minim.loadFile("FAILURE.wav");
+  theme.loop();
 }
 
 

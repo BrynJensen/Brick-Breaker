@@ -1,4 +1,4 @@
-void intro() {
+void intro() {  
   //GIF BACKGROUND
   image(gif[frame], 0, 0, width, height);
   if (frameCount % 3 == 0) frame++;
