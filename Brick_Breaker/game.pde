@@ -1,5 +1,4 @@
 void game() {
-  println(counter);
   background(darkTeal);
 
   //DRAW PADDLE
@@ -20,30 +19,34 @@ void game() {
   fill(white);
   noStroke();
 
-  if (countL == true || countS == true) counter++;
-
-  if (counter < 120 && frameCount % 12 == 0 && counter != 0 && countL == true) {
-    blinkL = !blinkL;
-  } else if (counter > 120) {
-    blinkL = true;
-    counter = 0;
-    countL = false;
-  }
-
-  if (counter < 60 && frameCount % 12 == 0 && counter != 0 && countS == true) {
-    blinkS = !blinkS;
-  } else if (counter > 120) {
-    blinkS = true;
-    counter = 0;
-    countS = false;
-  }
-
+  //SCORE AND LIVES FLASHING
   if (blinkL == true) {
     text("Lives: " + lives, 60, 30);
   }
 
   if (blinkS == true) {
     text("Score: " + score, width - 75, 30);
+  }
+
+  if (countL == true) counterL++;
+  if (countS == true) counterS++;
+  if (counterL > 120) counterL = 0;
+  if (counterS > 60) counterS = 0;
+
+  if (counterL < 120 && frameCount % 12 == 0 && counterL != 0 && countL == true) {
+    blinkL = !blinkL;
+  } else if (counterL == 0) {
+    blinkL = true;
+    counterL = 0;
+    countL = false;
+  }
+
+  if (counterS < 60 && frameCount % 12 == 0 && counterS != 0 && countS == true) {
+    blinkS = !blinkS;
+  } else if (counterS == 0) {
+    blinkS = true;
+    counterS = 0;
+    countS = false;
   }
 
 
@@ -57,12 +60,13 @@ void game() {
   } else if (by < bd/2) {
     bvy = -1 * bvy;
     by = bd/2;
-  } else if (by > height) {
+  } else if (by > height) { //LOSE LIFE AND RESET
     lives = lives - 1;
     countL = true;
+    counterL = 0;
 
     bx = width/2;
-    px = width/2;
+    px = random(width/2 - 45, width/2 + 45);
     by = height - 125;
     bvx = 0;
     bvy = 1;
@@ -85,7 +89,7 @@ void game() {
   if (px < -1 * pd/2) px = width + pd/2;
   if (px > width + pd/2) px = -1 * pd/2;
 
-
+//DRAW BRICKS
   int i = 0;
   while (i < n) {
     if (alive[i] == true) {
@@ -95,7 +99,18 @@ void game() {
   }
 
   //END GAME
-  if (lives == 0 || score == 4500) mode = GAMEOVER;
+  if (lives == 0 || score == 4500) {
+    noStroke();
+    fill(darkTeal);
+    rect(0, 0, height, 50);
+
+    fill(white);
+    textSize(26);
+    text("Lives: " + lives, 60, 30);
+    text("Score: " + score, width - 75, 30);
+
+    mode = GAMEOVER;
+  }
 }
 
 void gameClicks() {
@@ -122,6 +137,7 @@ void manageBrick (int i) {
     alive[i] = false;
     score += 100;
     countS = true;
+    counterS = 0;
     coin.play();
     coin.rewind();
   }

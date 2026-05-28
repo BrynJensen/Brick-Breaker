@@ -5,7 +5,7 @@ void gameover() {
   //TEXT COVER FOR BLINK
   //TEXT COVER RECT
   fill(darkTeal);
-  rect(0, height/2 - 100, width, 200);
+  rect(0, 100, width, height - 250);
 
   //REDRAW BRICKS
   int i = 0;
@@ -20,10 +20,11 @@ void gameover() {
   fill(white);
   noStroke();
   circle(bx, by, bd);
-  
+
   fill(darkTeal);
   circle( width/2, height - 125, 25);
 
+  //FLASHING TEXT
   if (frameCount % 15 == 0) blink = !blink;
 
   if (lives > 0 && blink == true) {

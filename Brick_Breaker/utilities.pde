@@ -14,6 +14,12 @@ void squareButton(float x, float y, float w, float h) {
 }
 
 void reset() {
+  blinkL = true;
+  blinkS = true;
+  counterS = 0;
+  counterL = 0;
+  countS = false;
+  countL = false;
   px = random(width/2 - 45, width/2 + 45);
   py = height;
   bx = width/2;

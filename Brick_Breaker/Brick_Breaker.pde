@@ -1,8 +1,7 @@
 //Bryn Jensen
 //2-1
 //Brick Breaker
-//add lives to bricks and animation to darken as hit.
-//score counter not working
+
 
 import processing.javafx.*;
 
@@ -59,17 +58,18 @@ float bvx, bvy; //BALL VELOCITY
 boolean akey, dkey;
 
 //GAME VARIABLES
-int score = 0;
-int lives = 3;
-float text = 80;
-boolean blink;
-boolean blinkL = true;
-boolean blinkS = true;
-int counter = 0;
+int score = 0; //TRACK SCORE
+int lives = 3; //TRACK LIVES
+float text = 80; //TEXT SIZE CHANGER
+boolean blink; //FLASH TEXT IN GAME OVER
+boolean blinkL = true; //FLASH LIVES TEXT
+boolean blinkS = true; //FLASH SCORE TEXT
+int counterL = 0; //COUNTER FOR LIVES FLASH
+int counterS = 0; //COUNTER FOR SCORE FLASH
 boolean countL = false;
 boolean countS = false;
 
-boolean textS = true;
+boolean textS = true; //TEXT SIZE CHANGE TRACK
 
 //BRICK VARIABLES
 int[] x;
